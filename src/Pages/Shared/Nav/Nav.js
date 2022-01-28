@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../../Hooks/UseAuth/useAuth';
-
 import './Nav.css'
 
 
 const Nav = () => {
 
-    const {user, admin, logOut} = useAuth();
+    const {user, admin, logout} = useAuth();
 
     return (
         <div className='my-navigation p-0 m-0'>
@@ -31,15 +30,15 @@ const Nav = () => {
                                     <Link className="nav-link text-white " data-bs-toggle="dropdown" role="button" aria-expanded="false" to="/Dashboard">Dashboard</Link>
                                     <ul className="dropdown-menu p-0">
                                         <li>
-                                            <Link className="dropdown-item nav-link  my-hover" to="/myOrder">My Orders</Link>
+                                            <Link className="dropdown-item nav-link  my-hover" to="/publishBlog">Publish Blog</Link>
                                         </li>
                                         <li>
-                                            <Link className="dropdown-item nav-link  my-hover" to="/payment">Payment</Link>
+                                            <Link className="dropdown-item nav-link  my-hover" to="/myBlog">My Blog</Link>
                                         </li>
                                         <li>
                                             {
                                                 user.email ?
-                                                <Link className="dropdown-item nav-link my-hover" onClick={logOut}  to="/home">Log Out</Link>
+                                                <Link className="dropdown-item nav-link my-hover" onClick={logout}  to="/home">Log Out</Link>
                                                 :
                                                 <Link className="nav-link nav-item my-hover" to="/login">Login</Link>
                                             }
@@ -51,13 +50,13 @@ const Nav = () => {
                                     <Link className="nav-link text-white " data-bs-toggle="dropdown" role="button" aria-expanded="false" to="/admin">Admin</Link>
                                     <ul className="dropdown-menu p-0">
                                         <li>
-                                            <Link className="dropdown-item nav-link my-hover" to="/manageOrder">Manage All Orders</Link>
+                                            <Link className="dropdown-item nav-link my-hover" to="/manageBlogs">Manage Blogs</Link>
                                         </li>
                                         <li>
-                                            <Link className="dropdown-item nav-link my-hover" to="/addProduct">Add Product</Link>
+                                            <Link className="dropdown-item nav-link my-hover" to="/addBlog">Add Blog</Link>
                                         </li>
                                         <li>
-                                            <Link className="dropdown-item nav-link text-white my-hover" to="/manageProduct">Manage All Products</Link>
+                                            <Link className="dropdown-item nav-link text-white my-hover" to="/approvalBlog">Approval Blog</Link>
                                         </li>
                                         <li>
                                             <Link className="dropdown-item nav-link text-white my-hover" to="/makeAdmin">Make Admin</Link>
@@ -66,7 +65,7 @@ const Nav = () => {
                                             {
                                                 user.email ?
                                                 <Link className="dropdown-item nav-link
-                                                my-hover" onClick={logOut}  to="/home">Log Out</Link>
+                                                my-hover" onClick={logout}  to="/home">Log Out</Link>
                                                 :
                                                 <Link className="nav-link nav-item
                                                 my-hover" to="/login">Login</Link>
@@ -79,7 +78,7 @@ const Nav = () => {
                             {
                                 user.email ?
                                 <li className="nav-item">
-                                    <Link className="nav-link text-white" onClick={logOut} to="/home">Log Out</Link>
+                                    <Link className="nav-link text-white" onClick={logout} to="/home">Log Out</Link>
                                 </li>
                                 :
                                 <li className="nav-item">

@@ -36,12 +36,12 @@ const Register = () => {
     }
     return (
         <>
-           <Container className='mx-auto'>
+           <Container className='py-5'>
             <h5>CREATE AN ACCOUNT</h5>
                 {!isLoading && <Form onSubmit={handleRegistrationSubmit}>
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label>Name</Form.Label>
-                        <Col sm="8">
+                        <Col sm="6">
                             <Form.Control
                                 sm="8"
                                 type="name"
@@ -54,7 +54,7 @@ const Register = () => {
                         <Form.Label>
                             Email Address
                         </Form.Label>
-                        <Col sm="8">
+                        <Col sm="6">
                             <Form.Control
                                 type="email"
                                 name="email"
@@ -68,7 +68,7 @@ const Register = () => {
                         <Form.Label>
                             Password
                         </Form.Label>
-                        <Col sm="8">
+                        <Col sm="6">
                             <Form.Control
                                 type="password"
                                 name="password1"
@@ -81,7 +81,7 @@ const Register = () => {
                         <Form.Label>
                             Re-Type Password
                         </Form.Label>
-                        <Col sm="8">
+                        <Col sm="6">
                             <Form.Control
                                 type="password"
                                 name="password2"
@@ -90,7 +90,7 @@ const Register = () => {
                             />
                         </Col>
                     </Form.Group>
-                    <Button variant="outline-primary" type='submit'>Register</Button>
+                    <Button variant="success" type='submit'>Register</Button><br /><br />
                     <Link  to='/login'><p className="">Already Register?</p></Link>
                 </Form>}
 

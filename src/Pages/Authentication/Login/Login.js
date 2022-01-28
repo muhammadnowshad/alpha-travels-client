@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, Col, Container, Form, Row, Spinner, } from 'react-bootstrap'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../../Hooks/UseAuth/useAuth';
-
+import './Login.css'
 
 const Login = () => {
 
@@ -34,14 +34,14 @@ const Login = () => {
 
     return (
         <>
-            <Container>
+            <Container className='py-5'>
                 <h5>Login</h5>
                 <Form onSubmit={handleLoginSubmit}>
                     <Form.Group as={Row} className="mb-3">
                         <Form.Label>
                             Email Address
                         </Form.Label>
-                        <Col sm="8">
+                        <Col sm="6">
                             <Form.Control name="email" type="email" placeholder="Email" onChange={handleOnChange} />
                         </Col>
                     </Form.Group>
@@ -50,35 +50,23 @@ const Login = () => {
                         <Form.Label>
                             Password
                         </Form.Label>
-                        <Col sm="8">
+                        <Col sm="6">
                             <Form.Control name="password" type="password" placeholder="Password" onChange={handleOnChange} />
                         </Col>
                     </Form.Group>
-                    <Button variant="outline-primary" type='submit' >Login</Button>
+                    <Button variant="success" className='px-4' type='submit' >Login</Button><br /><br />
                     <Link  to='/register'><p className="">New User?</p></Link>
                 </Form>
 
                 {isLoading && <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </Spinner>}
-                {user?.email && [
-                    'success'
-                ].map((variant, idx) => (
-                    <Alert key={idx} variant={variant}>
-                        Login Success
-                    </Alert>
-                ))}
-                {authError && [
-                    'danger'
-                ].map((variant, idx) => (
-                    <Alert key={idx} variant={variant}>
-                        {authError}
-                    </Alert>
-                ))}
+                {user?.email && <Alert severity="success">Login successfully!</Alert>}
+                {authError && <Alert severity="error">{authError}</Alert>}
 
-                <div className='my-4 d-flex justify-content-center align-items-center'>
-                    <h3 className='me-5'>Also Signin</h3>
-                    <button className='btn btn-danger py-2' onClick={handleGoogleSignIn}>Google Sign In</button>
+                <div className='my-4 d-flex align-items-center'>
+                    <h4 className='me-5'>Also Signin</h4>
+                    <Button variant="success" className='py-2' onClick={handleGoogleSignIn}>Google Sign In</Button>
                 </div>
 
             </Container>

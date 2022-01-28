@@ -1,28 +1,26 @@
-import { useState, useEffect } from 'react';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken, signOut } from "firebase/auth";
-import initializeFirebase from '../../Pages/Authentication/Firebase/firebase.init';
-
+import { useEffect, useState } from "react";
+import initializeFirebase from "../../Pages/Authentication/Firebase/firebase.init";
 
 
 // initialize firebase app
 initializeFirebase();
 
 const useFirebase = () => {
-    
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [authError, setAuthError] = useState('');
-    const [admin, setAdmin] = useState(false)
+    const [admin, setAdmin] = useState(false);
     const [token, setToken] = useState('');
+    
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
-    //Register with Email & Passwod
-    const registerUser = (email, password, name, history, location) => {
+    const registerUser = (email, password, name, location, navigate ) => {
         setIsLoading(true);
         createUserWithEmailAndPassword(auth, email, password)
-            .then((result) => {
+            .then((userCredential) => {
                 setAuthError('');
                 const newUser = { email, displayName: name };
                 setUser(newUser);
@@ -33,10 +31,24 @@ const useFirebase = () => {
                     displayName: name
                 }).then(() => {
                 }).catch((error) => {
-                    setAuthError(error.message);
                 });
                 const destination = location?.state?.from || '/';
-                history.replace(destination);
+                navigate(destination);
+            })
+            .catch((error) => {
+                setAuthError(error.message);
+                console.log(error);
+            })
+            .finally(() => setIsLoading(false));
+    }
+
+    const loginUser = (email, password, location, navigate) => {
+        setIsLoading(true);
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const destination = location?.state?.from || '/';
+                navigate(destination);
+                setAuthError('');
             })
             .catch((error) => {
                 setAuthError(error.message);
@@ -44,34 +56,15 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
-    //Email Signin
-    const loginUser = (email, password, location, history) => {
-        setIsLoading(true);
-        signInWithEmailAndPassword(auth, email, password)
-            .then((result) => {
-                const user = result.user;
-                console.log(user)
-                const destination = location?.state?.from || '/';
-                history.replace(destination);
-                setAuthError('');
-            })
-            .catch((error) => {
-                setAuthError(error.message);
-            })
-            .finally(() => setIsLoading(false));
-    }
-    
-    //Google Signin
-    const signInWithGoogle = (location, history) => {
+    const signInWithGoogle = (location, navigate) => {
         setIsLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                console.log(user)
                 saveUser(user.email, user.displayName, 'PUT');
-                const destination = location?.state?.from || '/';
-                history.replace(destination);
                 setAuthError('');
+                const destination = location?.state?.from || '/';
+                navigate(destination);
             }).catch((error) => {
                 setAuthError(error.message);
             }).finally(() => setIsLoading(false));
@@ -95,13 +88,12 @@ const useFirebase = () => {
     }, [auth])
 
     useEffect(() => {
-        fetch(`https://polar-stream-41574.herokuapp.com/users/${user.email}`)
+        fetch(`http://localhost:5000/users/${user.email}`)
             .then(res => res.json())
             .then(data => setAdmin(data.admin))
     }, [user.email])
 
-    //Log Out Fucntion
-    const logOut = () => {
+    const logout = () => {
         setIsLoading(true);
         signOut(auth).then(() => {
             // Sign-out successful.
@@ -111,17 +103,16 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
-    //Save Database Function
     const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
-        fetch('https://polar-stream-41574.herokuapp.com/users', {
+        fetch('http://localhost:5000/users', {
             method: method,
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(user)
         })
-        .then()
+            .then()
     }
 
     return {
@@ -133,7 +124,7 @@ const useFirebase = () => {
         registerUser,
         loginUser,
         signInWithGoogle,
-        logOut,
+        logout,
     }
 }
 
