@@ -8,7 +8,7 @@ const AddBlog = () => {
     const { register, handleSubmit, reset } = useForm();
     const onSubmit = data => {
         console.log(data);
-        axios.post('http://localhost:5000/blogs', data)
+        axios.post('https://floating-spire-61483.herokuapp.com/blogs', data)
         .then(res => {
             if(res.data.insertedId){
                 alert('added successfully');

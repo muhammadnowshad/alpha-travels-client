@@ -11,7 +11,7 @@ const ManageBlogs = () => {
     const size = 10;
     
     useEffect(() => {
-        fetch(`http://localhost:5000/blogs?page=${page}&&size=${size}`)
+        fetch(`https://floating-spire-61483.herokuapp.com/blogs?page=${page}&&size=${size}`)
             .then(res => res.json())
             .then(data => {
                 setDatas(data.blogs);
@@ -25,7 +25,7 @@ const ManageBlogs = () => {
     const handleDeleteUser = id => {
         const proceed = window.confirm('Are you sure, you want to delete?');
         if (proceed) {
-            const url = `http://localhost:5000/blog/${id}`;
+            const url = `https://floating-spire-61483.herokuapp.com/blog/${id}`;
             fetch(url, {
                 method: 'DELETE'
             })

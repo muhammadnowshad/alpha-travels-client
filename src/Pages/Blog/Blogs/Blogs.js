@@ -12,7 +12,7 @@ const Blogs = () => {
     const size = 10;
     
     useEffect(() => {
-        fetch(`http://localhost:5000/blogs?page=${page}&&size=${size}`)
+        fetch(`https://floating-spire-61483.herokuapp.com/blogs?page=${page}&&size=${size}`)
             .then(res => res.json())
             .then(data => {
                 setDatas(data.blogs);
