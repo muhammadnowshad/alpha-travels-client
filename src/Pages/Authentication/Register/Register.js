@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { Alert, Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../../../Hooks/UseAuth/useAuth'
 
 
 const Register = () => {
-    const [loginData, setLoginData] = useState({})
+
+    const [loginData, setLoginData] = useState([]);
     const [passDidNotMatch, setPassDidNotMatch] = useState('')
-    const history = useNavigate()
+    const { user, registerUser, isLoading, authError } = useAuth();
 
-    const { registerUser, isLoading, user, authError } = useAuth();
-
-    // console.log(loginData);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleOnBlur = e => {
         const field = e.target.name;
@@ -21,19 +21,15 @@ const Register = () => {
         setLoginData(newLoginData)
         // console.log(field, value, newLoginData);
     }
+
     const handleRegistrationSubmit = e => {
         e.preventDefault();
         if (loginData.password1 !== loginData.password2) {
-            setPassDidNotMatch('password did not match');
-            return
+            setPassDidNotMatch('Your password did not match');
         }
-        else {
-            setPassDidNotMatch('')
-            registerUser(loginData.email, loginData.password1, loginData.name, history);
-
-        }
-
+        registerUser(loginData.email, loginData.password, loginData.name, navigate, location);
     }
+
     return (
         <>
            <Container className='py-5'>

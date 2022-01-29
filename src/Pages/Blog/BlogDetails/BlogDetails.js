@@ -8,7 +8,7 @@ const BlogDetails = ({datum}) => {
     const [blog, setBlog] = useState({});
 
     useEffect( () => {
-        const url = `https://floating-spire-61483.herokuapp.com/blogs/${blogId}`
+        const url = `https://aqueous-taiga-88627.herokuapp.com/blogs/${blogId}`
         fetch(url)
         .then(res => res.json())
         .then(data => setBlog(data))

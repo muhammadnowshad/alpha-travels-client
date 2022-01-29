@@ -7,10 +7,10 @@ import './Login.css'
 const Login = () => {
 
     const [loginData, setLoginData] = useState({});
-    const { user, loginUser, isLoading, authError, signInWithGoogle, navigate } = useAuth();
-    const history = useNavigate();
+    const { user, loginUser, signInWithGoogle, isLoading, authError } = useAuth();
+
+    const navigate = useNavigate();
     const location = useLocation();
-    // console.log(loginData);
 
     const handleOnChange = e => {
         const field = e.target.name;
@@ -23,9 +23,7 @@ const Login = () => {
 
     const handleLoginSubmit = e => {
         e.preventDefault();
-
-        loginUser(loginData.email, loginData.password, history, location);
-        return
+        loginUser(loginData.email, loginData.password, location, navigate);
     }
 
     const handleGoogleSignIn = () => {

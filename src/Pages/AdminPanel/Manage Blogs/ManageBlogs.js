@@ -11,7 +11,7 @@ const ManageBlogs = () => {
     const size = 10;
     
     useEffect(() => {
-        fetch(`https://floating-spire-61483.herokuapp.com/blogs?page=${page}&&size=${size}`)
+        fetch(`https://aqueous-taiga-88627.herokuapp.com/blogs?page=${page}&&size=${size}`)
             .then(res => res.json())
             .then(data => {
                 setDatas(data.blogs);
@@ -25,7 +25,7 @@ const ManageBlogs = () => {
     const handleDeleteUser = id => {
         const proceed = window.confirm('Are you sure, you want to delete?');
         if (proceed) {
-            const url = `https://floating-spire-61483.herokuapp.com/blog/${id}`;
+            const url = `https://aqueous-taiga-88627.herokuapp.com/blog/${id}`;
             fetch(url, {
                 method: 'DELETE'
             })
